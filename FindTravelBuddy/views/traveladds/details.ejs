@@ -1,0 +1,73 @@
+<html lang="en">
+<%- include('../partials/head.ejs') %>
+
+    <body>
+        <%- include('../partials/navbar.ejs') %>
+            <div class="container">
+                <div class="card-details">
+                    <br>
+                    <h2 class="card-title">
+                        <%= traveladd.title %>
+                    </h2>
+                    <div class="details content">
+                        <a href="javascript:history.back()">❮</a>
+
+                        <br>
+                        <div class="content">
+                            <h5>Destination:</h5>
+                            <p>
+                                <%= traveladd.destination%>
+                            </p>
+
+                            <h5>About:</h5>
+                            <p>
+                                <%= traveladd.description%>
+                            </p>
+
+                            <h5>Min Budget (£):</h5>
+                            <p>
+                                <%= traveladd.minbudget%>
+                            </p>
+
+                            <h5>Max Budget (£):</h5>
+                            <p>
+                                <%= traveladd.maxbudget%>
+                            </p>
+
+                            <br>
+                            <% if(user._id == traveladd.creatorId){ %>
+                                <h5>Creator:</h5>
+                                <a href="/profile">
+                                    <%= traveladd.creatorName %> (me)</a>
+                                <br/>
+                                <a class="deleteAdd" data-doc="<%= traveladd._id %>">Delete Trip</a>
+                                <script>
+                                    const trashcan = document.querySelector('a.deleteAdd');
+                                    trashcan.addEventListener('click', (e) => {
+                                        const endpoint = `/traveladds/${trashcan.dataset.doc}`;
+                                        fetch(endpoint, {
+                                                method: 'DELETE'
+                                            })
+                                            .then((response) => response.json())
+                                            .then((data) => {
+                                                window.location.href = data.redirect;
+                                            })
+                                            .catch(err => {
+                                                console.log(err);
+                                            });
+                                    });
+                                </script>
+                                <% } else{ %>
+                                    <h5>Creator:</h5>
+                                    <a href="/profile/<%= traveladd.creatorId %>">
+                                        <%= traveladd.creatorName %>
+                                    </a>
+                                    <% }%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

@@ -1,0 +1,100 @@
+<html lang="en">
+<%- include('../partials/head.ejs') %>
+
+    <body>
+        <%- include('../partials/navbar.ejs') %>
+            <form action="/search-travel/trips">
+                <h2>Search</h2>
+
+                <p>Nothing is requierd, you can choose what you want to filter on! </p>
+
+                <label for="budget">Budget (£)</label>
+                <input type="number" name="minBudget" placeholder="Min">
+                <input type="number" name="maxBudget" placeholder="Max">
+
+                <label for="destination">Destination</label>
+                <br>
+                <select class="selectpicker countrypicker" id="countryShort" name="countryShort" data-flag="true" onchange="homeFunction(this)"></select>
+
+                <label class="labelcheckBox">
+                    <input class="inputCheckbox" type="checkbox" id="idchk" name="checkBoxCountry" />
+                    I do not want to search for a country
+                </label>
+
+                <script>
+                    $('.countrypicker').countrypicker();
+                </script>
+
+                <input type="hidden" name="country" id="country" value="" />
+                <script type="text/javascript">
+                    function homeFunction(sel) {
+                        document.getElementById("country").setAttribute('value', sel.options[sel.selectedIndex].text);
+                    }
+                </script>
+
+                <script type="text/javascript">
+                    $(function() {
+                        $("#idchk").change(function() {
+                            var st = this.checked;
+                            if (st) {
+                                $("#countryShort").prop("disabled", true);
+                            } else {
+                                $("#countryShort").prop("disabled", false);
+                            }
+                        });
+                    });
+                </script>
+
+                <div class="input-field col s12">
+                    <label for="lastName"> Gender </label>
+                    <select id="gender" name="gender" class="form-select form-select-lg mb-3">
+                    <option value="" disabled selected> Choose your gender</option>
+                    <option value="Male"> Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <% var today = new Date();
+                var year = today.getFullYear();
+                var month = (today.getMonth()+1);
+                if(month<10){
+                    month= "0" + month;
+                }
+                var thisMonth= year + "-" + month;
+                %>
+
+                    <label for="dates">When do you want to travel:</label>
+                    <p>Start:</p>
+                    <input type="month" id="startdates" name="startdate" min="<%= thisMonth %>" onchange="adjustEndDate()" />
+                    <p>End:</p>
+                    <input type="month" id="enddates" name="enddate" min="<%= thisMonth %>" onchange="adjustEndDate()"/>
+
+                    <script>
+                        function adjustEndDate() {
+                            if( start = document.getElementById("startdates").value && document.getElementById("enddates").value ){
+                                var start = document.getElementById("startdates").value.split("-");
+                                var end = document.getElementById("enddates").value.split("-");
+                                start = start.map(Number);
+                                end = end.map(Number);
+
+                                if (start[0] > end[0]) {
+                                    document.getElementById("enddates").value = document.getElementById("startdates").value;
+                                } else if (start[0] == end[0]) {
+                                    if (start[1] > end[1]) {
+                                        document.getElementById("enddates").value = document.getElementById("startdates").value;
+                                    }
+                                }
+                            }
+                        }
+                    </script>
+
+                    <div class="submitBox">
+                        <button type="submit" class="btn btn-primary btn-lg">Search</button>
+                    </div>
+
+            </form>
+            <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

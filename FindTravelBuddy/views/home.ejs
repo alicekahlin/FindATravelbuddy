@@ -1,0 +1,22 @@
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+
+    <body>
+        <%- include('./partials/navbar.ejs') %>
+            <div class="container">
+                <div class="card-home">
+                    <% if(typeof(user) == "undefined" || user == null){ %>
+                        <h1 class="userName">Welcome to TravelBuddy!!</h1>
+                        <p class="homePageP"> Please sign in or sign up if you want to find your travelbuddy</p>
+                        <% } else { %>
+                            <h1 class="userName">Welcome to TravelBuddy
+                                <a class="userName" href="/profile">
+                                    <%=user.firstName%>
+                                </a>!!</h1>
+                            <p class="homePageP">You are logged in and can search for trips <a class="homePageA" href="/search-travel">here</a> or create your own <a class="homePageA" href="/traveladds/create">here</a></p>
+                            <% } %>
+                </div>
+                <%- include('./partials/footer.ejs') %>
+    </body>
+
+</html>

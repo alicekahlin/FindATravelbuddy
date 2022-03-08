@@ -1,0 +1,81 @@
+<html lang="en">
+<%- include('../partials/head.ejs') %>
+
+    <body>
+        <%- include('../partials/navbar.ejs') %>
+            <div class="container">
+                <div class="profileBody">
+                    <% var private;
+                    var markedUser;
+                    if(theuser == null){
+                        markedUser= user;
+                        private= true;
+                    }
+                    else{
+                        markedUser= theuser;
+                        private= false;
+                    }
+                %>
+
+                        <div class='centerBox'>
+
+                            <% if(private == false){ %>
+                                <a href="javascript:history.back()" class="editProfileBack">❮</a>
+                                <% } %>
+                                    <% if(markedUser.profilepicture.filename == ""){ %>
+                                        <img src="/default.png" class="profileIm" />
+                                        <%}else{ 
+                       %>
+                                            <% var imdata = "data:"+markedUser.profilepicture.filetype+";charset=utf-8;base64,"+markedUser.profilepicture.data.toString('base64') %>
+                                                <img src="<%= imdata %>" class="profileIm" />
+                                                <% } %>
+                                                    <% if(private == true){ %>
+                                                        <div class="editbuttonBox">
+                                                            <i class="material-icons" style=" position: absolute; left: 5px; font-size:50px;color:#FF8884; cursor: pointer;" onclick="window.location='/profile/edit';">person_outline</i>
+                                                            <i class="material-icons" style=" position: absolute; left: 28px; top: 19px; font-size:30px;color:#FF8884; cursor: pointer;" onclick="window.location='/profile/edit';">edit</i>
+                                                        </div>
+
+                                                        <% } %>
+                        </div>
+                        <h2 class="card-title">
+                            <%= markedUser.firstName + " " + markedUser.lastName %>
+                        </h2>
+                        <div class="centerBox">
+                            <div class="infoBox">
+                                <p><span class="infolable">Gender: </span>
+                                    <%= markedUser.gender %>
+                                </p>
+                                <p><span class="infolable">Homecountry: </span>
+                                    <%= markedUser.homeCountry %>
+                                </p>
+                                <p><span class="infolable">Age: </span><span id="age"></span></p>
+                                <p><span class="infolable">About me: </span></p>
+                                <p>
+                                    <%= markedUser.about %>
+                                </p>
+                            </div>
+                        </div>
+
+                        <% if(private == false){ %>
+                            <form action="contactPerson/<%= theuser._id %>" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= user._id %>">
+                                <div class="submitBox">
+                                    <button name="contactPerson" value="contactPerson" >Contact Person</button>
+                                </div>
+                            </form>
+
+                            <% } %>
+
+
+                                <script src="/Age.js"></script>
+                                <script>
+                                    <% var year = markedUser.birthdate %>
+                                    var correctAge = getAge(<%= year %>);
+                                    document.getElementById("age").innerHTML = correctAge;
+                                </script>
+                </div>
+            </div>
+            <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

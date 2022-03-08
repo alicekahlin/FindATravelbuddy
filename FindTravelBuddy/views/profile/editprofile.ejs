@@ -1,0 +1,91 @@
+<html lang="en">
+<%- include('../partials/head.ejs') %>
+
+    <body>
+        <%- include('../partials/navbar.ejs') %>
+
+            <form action="/profile/edit?_method=PATCH" method="POST" enctype="multipart/form-data">
+                <a href="javascript:history.back()">❮</a>
+                <h2>Edit your profile</h2>
+
+                <label for="firstName">Firstname:</label>
+                <input type="text" id='firstName' name="firstName" value="<%= user.firstName %>" required/>
+
+                <label for="lastName">Lastname: </label>
+                <input type="text" id='lastName' name="lastName" value="<%= user.lastName %>" required/>
+
+                <% let def = ""; let m = ""; let w = ""; let o= "";
+            if(user.gender == "Male"){m="selected";} 
+            else if(user.gender== "Female"){w="selected";}
+            else if(user.gender== "Other"){o="selected";}
+            else{def="selected";}
+          %>
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" class="form-select form-select-lg mb-3">
+            <option  value="" disabled  <%= def %> >Choose your option</option>
+            <option value="Male"   <%= m %> >Male</option>
+            <option value="Female" <%= w %>>Female</option>
+            <option value="Other" <%= o %>>Other</option>
+          </select>
+
+                    <label for="homeCountryShort">Homecountry</label>
+                    <select class="selectpicker countrypicker" id="homeCountryShort" name="homeCountryShort" data-flag="true" onchange="homeFunction(this)" data-default="<%= user.homeCountryShort %>"></select>
+                    <script>
+                        $('.countrypicker').countrypicker();
+                    </script>
+                    <input type="hidden" name="homeCountry" id="homeCountry" value="<%= user.homeCountry %>" />
+                    <script>
+                        function homeFunction(sel) {
+                            document.getElementById("homeCountry").setAttribute('value', sel.options[sel.selectedIndex].text);
+                        }
+                    </script>
+
+                    <label for="birthdate">Birthday</label>
+                    <input type="date" data-date="" id="birthdate" name="birthdate" data-date-format="DD MMMM YYYY" />
+                    <script src="/Age.js"></script>
+                    <script>
+                        var defaultDate = dateToString(<%= user.birthdate%>);
+                        document.getElementById("birthdate").value = defaultDate;
+                    </script>
+
+                    <label for="about">About me:</label>
+                    <textarea id="about" name="about" class="form-control"><%= user.about %></textarea>
+
+                    <label for="profilepicture">Cover</label>
+                    <input type="file" name="profilepicture" id="profilepicture" accept="image/*">
+
+                    <input type="hidden" name="id" value="<%= user._id %>" />
+
+                    <div class="submitBox">
+                        <button class="btn btn-primary btn-lg">Change Profile</button>
+                    </div>
+            </form>
+
+            <div class="submitBox">
+                <a class="deleteProfile" data-doc="<%= user._id %>">
+                    <button class=" deleteProfileButton btn">Delete Profile</button>
+                </a>
+            </div>
+
+            <script>
+                const trashcan = document.querySelector('a.deleteProfile');
+                trashcan.addEventListener('click', (e) => {
+                    if (confirm("Sure that you want to delet your profile?")) {
+                        const endpoint = `/profile/edit/${trashcan.dataset.doc}`;
+                        fetch(endpoint, {
+                                method: 'DELETE'
+                            })
+                            .then((response) => response.json())
+                            .then((data) => {
+                                window.location.href = data.redirect;
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                    }
+                });
+            </script>
+            <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

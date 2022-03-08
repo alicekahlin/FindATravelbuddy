@@ -1,0 +1,24 @@
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light ">
+
+        <img src="/tblogo.svg" width="5%" height="5%" />
+        <a href="/">
+            <img src="/logotext.svg" width="75%" height="75%">
+        </a>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav">
+                <% if( typeof(user) =="undefined" || user == null){ %>
+                    <li class="nav-item"><a class="nav-link" href="/login">Log in</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/signup">Sign up</a></li>
+                    <% } else { %>
+                        <li class="nav-item"><a class="nav-link" href="/traveladds">All Travel Ads</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/search-travel">Search</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/traveladds/create">Create Travel Ad</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/profile">My Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
+                        <% } %>
+            </ul>
+        </div>
+    </nav>
+</div>

@@ -1,0 +1,191 @@
+<html lang="en">
+<%- include('../partials/head.ejs') %>
+
+    <body>
+        <%- include('../partials/navbar.ejs') %>
+            <form action="/traveladds" method="POST">
+                <h2>Create a Trip</h2>
+
+                <p style="text-align: center;">You are on right track to find a new TravelBuddy</p>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="desti">Destination:</label>
+                <br>
+                <select class="selectpicker countrypicker" id="desti" data-flag="true" onchange="destiFunction(this)"></select>
+                <script>
+                    $('.countrypicker').countrypicker();
+                </script>
+                <input type="hidden" name="destination" id="destination" value="" />
+                <script type="text/javascript">
+                    function destiFunction(sel) {
+                        var x = document.getElementById("desti").value;
+                        document.getElementById("destination").setAttribute('value', sel.options[sel.selectedIndex].text);
+                    }
+                </script>
+
+                <label for="description">Description of your trip:</label>
+                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+
+                <label for="slidern">Budget (£):</label>
+                <br/>
+                <br/>
+                <p id="demo"></p>
+                <div class="float-container">
+                    <div class="float-child">
+                        <p> Minimal: <span id="valueLeft"> </span> </p>
+                    </div>
+                    <div class="float-child">
+                        <p> Maximum: <span id="valueRight"> </span> </p>
+                    </div>
+                </div>
+                <div class="middle" id="slidern">
+                    <div class="multi-range-slider">
+                        <input type="range" id="input-left" min="0" max="10000" value="2500" name="minbudget" required>
+                        <input type="range" id="input-right" min="0" max="10000" value="7500" name="maxbudget" required>
+                        <script>
+                            function myFunction() {
+                                var x = document.getElementById("input-left").value;
+                                document.getElementById("demo").innerHTML = "You selected: " + x;
+                            }
+                        </script>
+                        <div class="slider">
+                            <div class="track"></div>
+                            <div class="range"></div>
+                            <div class="thumb left"></div>
+                            <div class="thumb right"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    var inputLeft = document.getElementById("input-left");
+                    var inputRight = document.getElementById("input-right");
+                    var outputLeft = document.getElementById("valueLeft");
+                    var outputRight = document.getElementById("valueRight");
+
+                    outputLeft.innerHTML = inputLeft.value;
+                    outputRight.innerHTML = inputRight.value;
+
+                    inputLeft.oninput = function() {
+                        if (this.value <= inputRight.value) {
+                            outputLeft.innerHTML = this.value;
+                        }
+                    }
+                    inputRight.oninput = function() {
+                        if (this.value >= inputLeft.value) {
+                            outputRight.innerHTML = this.value;
+                        }
+                    }
+
+                    var thumbLeft = document.querySelector(".slider > .thumb.left");
+                    var thumbRight = document.querySelector(".slider > .thumb.right");
+                    var range = document.querySelector(".slider > .range");
+
+                    function setLeftValue() {
+                        var _this = inputLeft,
+                            min = parseInt(_this.min),
+                            max = parseInt(_this.max);
+
+                        _this.value = Math.min(parseInt(_this.value), parseInt(inputRight.value) - 1);
+
+                        var percent = ((_this.value - min) / (max - min)) * 100;
+
+                        thumbLeft.style.left = percent + "%";
+                        range.style.left = percent + "%";
+                    }
+
+                    setLeftValue();
+
+                    function setRightValue() {
+                        var _this = inputRight,
+                            min = parseInt(_this.min),
+                            max = parseInt(_this.max);
+
+                        _this.value = Math.max(parseInt(_this.value), parseInt(inputLeft.value) + 1);
+
+                        var percent = ((_this.value - min) / (max - min)) * 100;
+
+                        thumbRight.style.right = (100 - percent) + "%";
+                        range.style.right = (100 - percent) + "%";
+                    }
+
+                    setRightValue();
+
+                    inputLeft.addEventListener("input", setLeftValue);
+                    inputRight.addEventListener("input", setRightValue);
+
+                    inputLeft.addEventListener("mouseover", function() {
+                        thumbLeft.classList.add("hover");
+                    });
+                    inputLeft.addEventListener("mouseout", function() {
+                        thumbLeft.classList.remove("hover");
+                    });
+                    inputLeft.addEventListener("mousedown", function() {
+                        thumbLeft.classList.add("active");
+                    });
+                    inputLeft.addEventListener("mouseup", function() {
+                        thumbLeft.classList.remove("active");
+                    });
+
+                    inputRight.addEventListener("mouseover", function() {
+                        thumbRight.classList.add("hover");
+                    });
+                    inputRight.addEventListener("mouseout", function() {
+                        thumbRight.classList.remove("hover");
+                    });
+                    inputRight.addEventListener("mousedown", function() {
+                        thumbRight.classList.add("active");
+                    });
+                    inputRight.addEventListener("mouseup", function() {
+                        thumbRight.classList.remove("active");
+                    });
+                </script>
+
+                <% var today = new Date();
+                    var year = today.getFullYear();
+                    var month = (today.getMonth()+1);
+                    if(month<10){
+                        month= "0" + month;
+                    }
+                    var thisMonth= year + "-" + month;
+                %>
+
+                    <label for="startdate">When do you want to travel:</label>
+                    <p>Start:</p>
+                    <input type="month" id="startdate" name="startdate" min="<%= thisMonth %>" value="<%= thisMonth %>" onchange="adjustEndDate()" />
+                    <p>End:</p>
+                    <input type="month" id="enddate" name="enddate" min="<%= thisMonth %>" value="<%= thisMonth %>" onchange="adjustEndDate()" />
+
+                    <script>
+                        function adjustEndDate() {
+                            var start = document.getElementById("startdate").value.split("-");
+                            var end = document.getElementById("enddate").value.split("-");
+                            start = start.map(Number);
+                            end = end.map(Number);
+
+                            if (start[0] > end[0]) {
+                                document.getElementById("enddate").value = document.getElementById("startdate").value;
+                            } else if (start[0] == end[0]) {
+                                if (start[1] > end[1]) {
+                                    document.getElementById("enddate").value = document.getElementById("startdate").value;
+                                }
+                            }
+                        }
+                    </script>
+
+                    <input type="hidden" name="creatorId" value="<%= user._id %>" />
+                    <% let creator = user.firstName + " " + user.lastName %>
+                        <input type="hidden" name="creatorName" value="<%= creator %>" />
+                        <input type="hidden" name="creatorGender" value="<%= user.gender %>" />
+                        <input type="hidden" name="creatorAge" value="<%= user.birthdate %>" />
+
+                        <div class="submitBox">
+                            <button type="submit" class="btn btn-primary btn-lg">Add Trip</button>
+                        </div>
+                        <br/>
+            </form>
+            <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

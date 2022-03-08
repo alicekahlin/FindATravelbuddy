@@ -1,0 +1,48 @@
+<html lang="en">
+<%- include('../partials/head.ejs') %>
+
+    <body>
+        <%- include('../partials/navbar.ejs') %>
+            <div class="container">
+                <div class="card-traveladds">
+                    <br>
+                    <h2 class="card-title">Search Results</h2>
+                    <div class="traveladds content">
+                        <% if(traveladds.length > 0){%>
+                            <% traveladds.forEach(traveladd => { %>
+                                <div class="add">
+                                    <a class="single" href="/traveladds/<%= traveladd._id %>">
+                                        <h3 class="title">
+                                            <%= traveladd.title %>
+                                        </h3>
+                                        <p class="snippet">
+                                            <%= traveladd.destination %>
+                                        </p>
+                                        <% if(user._id == traveladd.creatorId){ %>
+                                            <p class="snippet">
+                                                <%= traveladd.creatorName %> (me)</p>
+                                            <% } else{ %>
+                                                <p class="snippet">
+                                                    <%= traveladd.creatorName %>
+                                                </p>
+                                                <% }%>
+                                    </a>
+                                </div>
+                                <% }) %>
+                                    <% } else { %>
+                                        <p style="text-align: center;">No traveladds to display</p>
+                                        <% } %>
+
+                                            <div class="submitBox" onclick="location.href ='/search-travel'">
+                                                <button type="submit" class="btn btn-primary btn-lg">New Search</button>
+                                            </div>
+
+                                            <br/>
+                                            <br/>
+                    </div>
+                </div>
+            </div>
+            <%- include('../partials/footer.ejs') %>
+    </body>
+
+</html>

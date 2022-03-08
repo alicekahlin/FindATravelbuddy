@@ -1,0 +1,424 @@
+/* GENERAL- used in multiple files*/
+
+body {
+    background-color: rgb(245, 245, 252) !important;
+    font-family: 'Noto Serfi', serfi;
+}
+
+p,
+h1,
+h2,
+h3,
+a,
+ul {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    color: #222;
+}
+
+h5{
+    font-weight: bold !important;
+}
+
+.submitBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+}
+
+form {
+    width: 30%;
+    margin: 0 auto;
+    padding: 30px;
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background: white;
+}
+
+form h2 {
+    font-size: 2.4em;
+    font-weight: 900;
+    margin-bottom: 40px;
+}
+
+input {
+    padding: 10px 12px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 1em;
+    width: 100%;
+}
+
+label {
+    display: block;
+    margin: 20px 0 10px;
+}
+
+.labelCheckBox {
+    display: inline-block;
+    width: 100% !important;
+}
+
+input#idchk.inputcheckbox {
+    width: 10% !important;
+}
+
+.error {
+    color: #ff0099;
+    margin: 10px 2px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.form-group {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.btn-primary {
+    background-color: #34A1C7 !important;
+    border-color: #34A1C7 !important;
+    color: white !important;
+}
+
+
+/*NAVBAR*/
+
+.navbar {
+    border-bottom: double !important;
+    width: 100% !important;
+}
+
+.nav-item {
+    margin-left: 5% !important;
+    font-size: 19px !important;
+}
+
+.navbar-nav {
+    width: 100% !important;
+}
+
+.collapse {
+    padding-left: 8% !important;
+}
+
+
+/* FOOTER */
+
+footer {
+    color: #FF8884;
+    text-align: center;
+    margin: 80px auto 20px;
+}
+
+h2 {
+    margin-bottom: 40px;
+}
+
+h3 {
+    text-transform: capitalize;
+    margin-bottom: 8px;
+}
+
+.content {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 2%;
+}
+
+
+/*ABOUT*/
+
+.aboutP {
+    text-align: center;
+}
+
+
+/*HOME*/
+
+.card-home {
+    margin: 2%;
+    justify-content: center;
+    background-color: white;
+    height: 50%;
+    padding: 7%;
+}
+
+h1,
+h2,
+h3.card-title {
+    text-align: center;
+}
+
+.userName {
+    color: #026178 !important;
+}
+
+.homePageP {
+    font-size: 20;
+    text-align: center;
+}
+
+.homePageA {
+    color: #026178 !important;
+}
+
+.card {
+    background-color: white;
+    height: 40%;
+    margin-top: 2%;
+}
+
+.form-inline {
+    width: 40%;
+    margin: 0 auto;
+    padding: 30px;
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background: white;
+}
+
+
+/* CREATE TRAVELADD*/
+
+.card-traveladds {
+    background-color: white;
+    margin: 2%;
+}
+
+.float-child {
+    width: 50%;
+    float: left;
+    padding: 20px;
+}
+
+.budgetbox div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: green;
+}
+
+
+/* SLIDER in creat traveladd*/
+
+.middle {
+    position: relative;
+}
+
+.single {
+    color: black
+}
+
+.slider {
+    position: relative;
+    z-index: 1;
+    height: 10px;
+    margin: 0 15px;
+}
+
+.slider>.track {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 5px;
+    background-color: #34A1C7;
+}
+
+.slider>.range {
+    position: absolute;
+    z-index: 2;
+    left: 25%;
+    right: 25%;
+    top: 0;
+    bottom: 0;
+    border-radius: 5px;
+    background-color: #0682A6;
+}
+
+.slider>.thumb {
+    position: absolute;
+    z-index: 3;
+    width: 30px;
+    height: 30px;
+    background-color: #0682A6;
+    border-radius: 50%;
+    transition: box-shadow .3s ease-in-out;
+}
+
+.slider>.thumb.left {
+    left: 25%;
+    transform: translate(-15px, -10px);
+}
+
+.slider>.thumb.right {
+    right: 25%;
+    transform: translate(15px, -10px);
+}
+
+input[type=range] {
+    position: absolute;
+    pointer-events: none;
+    -webkit-appearance: none;
+    z-index: 2;
+    height: 10px;
+    width: 100%;
+    opacity: 0;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    pointer-events: all;
+    width: 30px;
+    height: 30px;
+    border-radius: 0;
+    border: 0 none;
+    background-color: red;
+    -webkit-appearance: none;
+}
+
+.add {
+    width: 50%;
+    margin-left: 10%;
+}
+
+
+/*INDEX*/
+
+.traveladds a {
+    display: block;
+    margin: 40px 0;
+    padding-left: 30px;
+    border-left: 6px solid #FF8884;
+}
+
+.traveladds a:hover h3 {
+    color: #FF8884;
+}
+
+
+/*DETAILS*/
+
+.back-arrow {
+    background-color: white;
+}
+
+.details {
+    position: relative;
+}
+
+.deleteAdd:hover {
+    cursor: pointer;
+    color: red;
+}
+
+.details {
+    position: relative;
+}
+
+.deleteAdd {
+    position: absolute;
+    top: 6%;
+    right: 0;
+    border-radius: 50%;
+    padding: 8px;
+    margin-right: 10%;
+    color: #F25E74;
+}
+
+.card-details {
+    justify-content: center;
+    background-color: white;
+    margin: 2%;
+    padding-bottom: 2%;
+}
+
+
+/* PROFILE */
+
+.profileBody {
+    background-color: white;
+    margin: 2%;
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.centerBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.profileIm {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #0682A6;
+}
+
+.editbuttonBox {
+    height: 60px;
+    width: 60px;
+    position: absolute;
+    left: 75%;
+    bottom: 5%;
+}
+
+.infoBox {
+    width: 500px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: #34A1C7;
+}
+
+.infolable {
+    font-weight: bold;
+}
+
+button{  
+    margin-top: 30px;  
+    border-radius: 36px;  
+    background: #FEE996;  
+    border:0;  
+    text-transform: uppercase;  
+    font-weight: 700;  
+    font-size: 0.8em;  
+    display: block;  
+    padding: 10px 16px;  
+    letter-spacing: 2px;  
+}
+
+
+
+/* EDIT PROFILE */
+
+.editProfileBack {
+    height: 60px;
+    width: 60px;
+    position: absolute;
+    left: 5%;
+    top: 5%;
+}
+
+
+/* DELETE */
+
+.deleteProfileButton {
+    background-color: #FF8884 !important;
+}
+
+.deleteProfileButton:hover {
+    cursor: pointer !important;
+    background-color: #F25E74 !important;
+}
